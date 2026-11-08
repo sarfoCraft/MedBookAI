@@ -1,0 +1,5 @@
+/* Only applied to the iframe's document; never imported into MedBook. */
+html.medbook-embedded .topbar, html.medbook-embedded .footer,
+html.medbook-embedded .ad-placement {display:none!important;}
+html.medbook-embedded .page-body {padding-top:18px;}
+html.medbook-embedded body {min-width:0;}
