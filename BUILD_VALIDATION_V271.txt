@@ -1,0 +1,26 @@
+MedBook AI v2.7.1 — Build / Regression Validation
+
+Executed in the extracted project directory:
+
+1. npm run check
+   RESULT: PASS
+   All JavaScript syntax checks in the package script completed successfully.
+
+2. npm run test:domain
+   RESULT: PASS
+   25 tests passed, 0 failed.
+   Includes regression tests for cross-doctor prescriptions, patient timeline, encounters,
+   appointment ownership, cross-branch billing, invoice reassignment, receptionist branch
+   booking, and clinic-date-aware No-Show correction.
+
+3. npm install --ignore-scripts --no-audit --no-fund
+   RESULT: TIMED OUT in the execution environment. Dependencies were not installed.
+
+Not executed / not verified:
+- Jest/Supertest test suite (Jest and Supertest dependencies unavailable).
+- Prisma client generation and schema validation.
+- PostgreSQL migration deployment and live API/database integration.
+- Browser end-to-end tests and production deployment.
+
+Do not interpret syntax and domain tests as a production certification. Complete the
+remaining checks in a staging environment before using real patient information.

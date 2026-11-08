@@ -1,0 +1,23 @@
+MedBook AI v2.5 — build validation record
+Date: 2026-11-07
+
+PASS
+- `npm run check`: Node.js syntax check passed for server.js, src/app.js, api.js and app.js.
+- `node --check` was run against every project JavaScript file outside the existing SnapText utility bundle; all checked files parsed successfully.
+- Static inspection confirmed the frontend's v2.5 persisted-state keys have matching backend validation fields.
+- Static inspection confirmed the PostgreSQL migration contains the organization, user, session, clinic state, backup and audit tables.
+
+NOT RUN IN THIS ENVIRONMENT
+- `npm install` could not complete because the package registry was not reachable from this execution environment. Therefore Jest, Supertest, Prisma CLI and Prisma Client were not available to execute.
+- Jest/Supertest tests are included in `tests/`, but `npm test` must be run after dependencies are installed locally.
+- `prisma validate`, `prisma migrate deploy`, owner seeding and live API/database integration tests were not run because Prisma dependencies and a PostgreSQL/Docker runtime were unavailable here.
+- Browser end-to-end tests were not run because a Playwright browser runtime was unavailable.
+
+NEXT LOCAL VALIDATION
+1. Follow the setup steps in README.md.
+2. Run `npm test`.
+3. Run `npx prisma validate`.
+4. Run `npx prisma migrate deploy` and `npm run db:seed`.
+5. Run `npm start`, then test sign-in, state save, trial expiry, backup export and backup restore in the browser.
+
+This record deliberately distinguishes syntax/static checks from tests that require installed dependencies and a live database. It does not claim the unexecuted tests have passed.

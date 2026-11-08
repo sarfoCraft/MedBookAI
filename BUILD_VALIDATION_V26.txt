@@ -1,0 +1,22 @@
+MedBook AI v2.6 — build validation record
+Date: 2026-11-07
+
+PASS
+- `npm run check`: Node.js syntax checks passed for server.js, src/app.js, api.js, appointment-domain.js, src/lib/state-schema.js and app.js.
+- Appointment domain smoke tests passed for automatic no-show presentation, today-vs-past date behavior, completion-only DOS assignment, explicit no-show marking and rescheduling.
+- Static inspection confirmed the v2.6 frontend snapshot keys have matching optional backend state-schema fields.
+- Static inspection confirmed actual DOS is copied into invoices and encounters only from completed appointments and checked against the linked appointment during state validation.
+
+NOT RUN IN THIS ENVIRONMENT
+- `npm test` could not run because Jest is not installed in the execution environment (`jest: not found`).
+- The package registry was not available to install dependencies; Zod, Prisma, Supertest and Jest were therefore not available for runtime tests.
+- Prisma validation, migrations, owner seeding, live PostgreSQL API tests and browser end-to-end tests were not run.
+
+NEXT LOCAL VALIDATION
+1. Run `npm install` in the extracted project folder.
+2. Run `npm test`.
+3. Run `npx prisma validate`.
+4. Run `npm run db:deploy` and `npm run db:seed` against the configured local database.
+5. Run `npm start` and verify booking, check-in, start visit, complete visit, check-out, no-show, reschedule, invoice and superbill flows.
+
+This record distinguishes syntax and pure-domain smoke checks from tests requiring installed dependencies, PostgreSQL and a browser. It does not claim the unexecuted tests have passed.

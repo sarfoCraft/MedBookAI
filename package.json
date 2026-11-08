@@ -1,0 +1,41 @@
+{
+  "name": "medbook-ai-v2-7-production-hardening",
+  "version": "2.7.2",
+  "private": true,
+  "description": "MedBook AI clinic workspace with Firebase Auth integration and Prisma/PostgreSQL production setup",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "node prisma/seed.js",
+    "db:studio": "prisma studio",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "check": "node --check server.js && node --check src/app.js && node --check api.js && node --check appointment-domain.js && node --check src/lib/state-schema.js && node --check src/lib/access.js && node --check src/lib/snapshot.js && node --check src/lib/time.js && node --check src/lib/crypto.js && node --check src/lib/prisma-session-store.js && node --check src/lib/firebase-admin.js && node --check src/lib/trial.js && node --check app.js && node --check prisma/seed.js && node --check tests/api.test.js && node --check tests/appointment-domain.test.js && node --check tests/state-schema.test.js && node --check tests/domain.node.test.cjs",
+    "generate:secrets": "node scripts/generate-secrets.js",
+    "test:domain": "node --test tests/domain.node.test.cjs",
+    "test:all": "npm run check && npm run test:domain && npm test"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.2",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-session": "^1.18.1",
+    "helmet": "^8.0.0",
+    "zod": "^3.24.2",
+    "firebase-admin": "^13.5.0",
+    "prisma": "^6.16.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}

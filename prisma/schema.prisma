@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  DOCTOR
+  RECEPTIONIST
+  BILLING
+  AUDITOR
+  STAFF
+}
+
+model Organization {
+  id                  String       @id @default(uuid()) @db.Uuid
+  name                String
+  slug                String       @unique
+  subscriptionStatus  String       @default("TRIAL")
+  trialStartedAt      DateTime     @default(now())
+  trialDurationDays   Int          @default(30)
+  trialEndsAt         DateTime
+  timezone            String       @default("UTC")
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+  users               User[]
+  clinicState         ClinicState?
+  backups             Backup[]
+  auditEvents         AuditEvent[]
+}
+
+model User {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @db.Uuid
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  email          String       @unique
+  displayName    String
+  passwordHash   String?
+  firebaseUid    String?      @unique
+  role           UserRole     @default(OWNER)
+  providerName   String?
+  branch         String?
+  isActive       Boolean      @default(true)
+  lastLoginAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  sessions       Session[]
+  backups        Backup[]
+  auditEvents    AuditEvent[]
+  updatedStates ClinicState[] @relation("StateUpdater")
+
+  @@index([organizationId, role])
+  @@index([organizationId, branch], map: "User_organizationId_branch_idx")
+  @@index([organizationId, providerName], map: "User_organizationId_providerName_idx")
+}
+
+model Session {
+  sid       String   @id
+  userId    String?  @db.Uuid
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  data      Json
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model ClinicState {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @unique @db.Uuid
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  version        Int          @default(1)
+  payload        Json
+  updatedById    String?      @db.Uuid
+  updatedBy      User?        @relation("StateUpdater", fields: [updatedById], references: [id], onDelete: SetNull)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([updatedAt])
+}
+
+model Backup {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @db.Uuid
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdById    String?      @db.Uuid
+  createdBy      User?        @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  kind           String
+  schemaVersion  String
+  checksum       String
+  payload        Json
+  createdAt      DateTime     @default(now())
+
+  @@index([organizationId, createdAt])
+}
+
+model AuditEvent {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @db.Uuid
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  actorUserId    String?      @db.Uuid
+  actor          User?        @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+  action         String
+  resourceType   String
+  resourceId     String?
+  outcome        String       @default("SUCCESS")
+  actorRole      String?
+  reason         String?
+  previousValues Json?
+  newValues      Json?
+  metadata       Json?
+  createdAt      DateTime     @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@index([organizationId, resourceType, resourceId, createdAt], map: "AuditEvent_resource_idx")
+}

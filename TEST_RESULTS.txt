@@ -1,0 +1,75 @@
+MedBook AI v2.0 (2026-11-05) — Playwright Chromium test evidence
+
+--- V16 ---
+PASS active-doctor empty state
+PASS specialty-matched doctors and conflict validation
+PASS calendar slot doctor/date/time and manual booking defaults
+PASS demo docs and toast stack capped at 3
+PASS live age and intake submit
+PASS mock prescription draft add/remove and disclaimer
+PASS native print event and isolated invoice print layout
+PASS new invoice created, amounts consistent
+PASS invoice-role guard blocks tampered DOM action
+PASS unauthorized draft action leaves items unchanged
+PASS inclusive audit UTC date-range and combined outcome filtering
+PASS audit outcome/UTC/CSV
+PASS specialty and role state reset; no page JS exceptions
+PASS insurance mock, global invoice search and reports CSV
+MOBILE 540 crumb visible: True overflow: 0
+MOBILE 390 crumb visible: True overflow: 0
+MOBILE 320 crumb visible: False overflow: 0
+PASS responsive mobile breadcrumb, invoice and toast/FAB spacing
+ALL V1.6 BROWSER TESTS PASSED
+SELECTED MEDBOOK AI v2.0 TEST SUITE(S) PASSED
+
+--- V17 ---
+PASS theme toggle and specialty-preserving dark variables
+PASS seeded and live patient timeline, events and scrolling
+PASS availability 7-day grid, leave details, week controls
+PASS feedback NPS donut, comments and synthetic CSV
+PASS global search invoice print flow, toasts on modal, close reset
+PASS 540/390/370/320px breadcrumb and modal toast mobile overrides
+ALL V1.7 TESTS PASSED
+SELECTED MEDBOOK AI v2.0 TEST SUITE(S) PASSED
+
+--- V18 ---
+PASS patient timeline pure read and explicit document creation
+PASS availability CSV matches week navigation, branch, shifts and leave
+PASS NPS date filtering, computed score, empty state and filtered CSV
+PASS Reset Demo clears saved theme and calls reload
+PASS cold reinitialization restores light theme and mock data
+PASS print invoice forces light mode even when mobile screen is dark
+PASS mobile theme toggle and 370/371px breadcrumb breakpoint
+SELECTED MEDBOOK AI v2.0 TEST SUITE(S) PASSED
+
+--- V19 ---
+PASS six local SnapText iframe routes, MedBook navigation, and PRO badges
+PASS embedded tool theme follows the parent in dark mode
+PASS role tier badges and receptionist UI restriction
+PASS MedBook appointment navigation and isolated SnapText CSS
+PASS 390px responsive clinical iframe with no host horizontal overflow
+SELECTED MEDBOOK AI v2.0 TEST SUITE(S) PASSED
+
+--- V20 ---
+PASS coding reference, search, expiry and deleted-CPT alerts
+PASS provider directory expiry display and staff profile
+PASS insurance/VOB, member card and sample ABN
+PASS claims tab, claim print preview and hospice certification
+PASS SOAP draft, charge capture, deleted CPT blocking, superbill CSV/print, signed lock
+PASS existing invoice print, specialty dark theme and SnapText iframe after RCM integration
+PASS v2.0 coding and SOAP screens at 390px with no host overflow
+SELECTED MEDBOOK AI v2.0 TEST SUITE(S) PASSED
+
+Notes: all five test sections were run individually. File navigation for browser testing was sandbox-restricted; source injection was used. No real payer, EHR, clinical signature, official coding, insurance form submission, or SnapText external OCR/PDF processing was tested.
+
+
+--- V21 ---
+PASS practice create, edit, view and delete, including linked-record reassignment to a destination practice
+PASS provider taxonomy code and assigned practice profile editing
+PASS complete patient registration and demographics profile editing
+PASS patient demographics print-to-PDF preview includes emergency contact and payer fields
+PASS dedicated encounter list and selected-patient SOAP navigation
+PASS practice-filtered superbill register CSV and combined print preview
+PASS all-appointment detail export and doctor-wise appointment summary
+PASS no uncaught browser page errors in v2.1 feature suite
+Run: python TEST_SCRIPT_V21.py

@@ -1,0 +1,26 @@
+MedBook AI v2.7.2 — Firebase Auth + Prisma Demo Build Validation
+
+Completed in this environment:
+- `npm run check` — PASS (all included JavaScript syntax checks).
+- `npm run test:domain` — PASS (25/25 tests).
+- Original Express/Prisma/PostgreSQL architecture and existing role/branch/provider controls retained.
+- Firebase Authentication login route, token verification, explicit UID mapping and legacy-login bypass protection added.
+- Prisma migration adds nullable `User.firebaseUid` and makes `passwordHash` optional.
+- Firebase-aware Owner seed and new-user provisioning added.
+- Dockerfile, full-stack Docker Compose service, `.dockerignore` and GitHub Actions CI workflow added.
+
+Not verified in this environment:
+- `npm install` timed out because the npm registry could not be reached (`EAI_AGAIN`). No `package-lock.json` was generated.
+- Jest/Supertest API suite could not run because dependencies were not installed.
+- Prisma Client generation, Prisma schema validation, PostgreSQL migration application and live database integration were not run.
+- Firebase Admin SDK runtime and sign-in against a real Firebase project were not run.
+- Docker image build, hosted deployment, HTTPS and browser end-to-end workflows were not run.
+
+Before client demo:
+1. Run `npm install` in a network-enabled environment and commit the generated `package-lock.json`.
+2. Run `npm run test:all`, `npx prisma validate`, `npx prisma generate`.
+3. Apply migrations to a fresh staging PostgreSQL database with `npm run db:deploy`.
+4. Configure Firebase Auth + Admin credentials and verify the Owner login.
+5. Run the browser role/workflow smoke tests using fictional demo data.
+
+Do not treat this demo build as production certified. Do not enter real patient information until the remaining controls in SECURITY.md are independently reviewed.
