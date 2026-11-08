@@ -226,7 +226,11 @@ Existing accounts without a `firebaseUid` continue to use the legacy bcrypt logi
 
 The Firebase Web API key is public client configuration, not a server secret. The Firebase service-account private key, `DATABASE_URL`, `SESSION_SECRET` and `DATA_ENCRYPTION_KEY` are server secrets and must be configured only in the hosting provider's secret/environment settings.
 
-GitHub stores source code and runs CI; it does not host this Express API or PostgreSQL database. See `GITHUB_UPLOAD.md` for the safe first-push commands. Deploy the Node.js app using the included `Dockerfile` on a Docker-capable Node host, and provide a reachable PostgreSQL database. Do not deploy this project to GitHub Pages as a static-only site: the login, Prisma API and session store require a running Node server.
+GitHub stores source code and runs CI; it does not host this Express API or PostgreSQL database. See `GITHUB_UPLOAD.md` for safe repository handling. For a Netlify demo deployment, follow `NETLIFY_DEPLOY.md`: the existing frontend is published from `public/`, the Express API runs as a Netlify Function, and Prisma connects to managed PostgreSQL. The `netlify.toml` file configures the build, function bundling, Prisma runtime files and `/api/*` rewrite. The build requires the database and secret environment variables to be configured in Netlify before deployment. A Docker-capable Node host remains an alternative for a persistent Express server. Do not deploy this project to GitHub Pages as a static-only site: the login, Prisma API and session store require a running backend.
+
+## Netlify deployment
+
+See [`NETLIFY_DEPLOY.md`](NETLIFY_DEPLOY.md) for the full Netlify + Supabase setup, required environment variables, and first-deploy behavior. The Netlify build applies the Prisma migrations and creates the configured Owner account before publishing the frontend and API function.
 
 ## Docker demo
 
